@@ -1,99 +1,95 @@
-# WaffleHub – tema til Paymenter
+# WaffleHub, a theme for Paymenter
 
-Et varmt, vaffel-inspireret tema til Paymenter med mørkt og lyst udseende,
-egen forside og et vaffel-logo med en afspilningsknap.
+A warm, waffle-inspired theme for Paymenter with dark and light modes, its own
+home page, and a waffle logo with a play button.
 
-![Forsiden i mørkt tema](screenshots/forside-dark.png)
+![The home page in dark mode](screenshots/forside-dark.png)
 
 <details>
-<summary>Lyst tema og mobil</summary>
+<summary>Light mode and mobile</summary>
 
-![Forsiden i lyst tema](screenshots/forside-light.png)
-![Forsiden på mobil](screenshots/mobil-dark.png)
+![The home page in light mode](screenshots/forside-light.png)
+![The home page on mobile](screenshots/mobil-dark.png)
 
 </details>
 
-> Skærmbillederne er en statisk forhåndsvisning bygget med temaets rigtige
-> stylesheet og samme markup som skabelonerne, men med eksempeltekst og
-> forenklet menu. De er ikke taget fra en kørende Paymenter.
+> The screenshots are a static preview built with the theme's real stylesheet
+> and the same markup as the templates, but with sample text and a simplified
+> menu. They were not taken from a running Paymenter.
 
-## Hvad temaet ændrer
+## What the theme changes
 
-Temaet bygger oven på Paymenters standardtema. Alle sider, der ikke ligger i
-`themes/wafflehub/views`, kommer fra standardtemaet, så kurv, betaling,
-kundeområde og fakturaer virker som før og følger med, når Paymenter opdateres.
+The theme builds on Paymenter's default theme. Every page that is not in
+`themes/wafflehub/views` comes from the default theme, so the cart, checkout,
+client area and invoices work as before and keep up when Paymenter is updated.
 
-| Ændret | Hvordan |
+| Changed | How |
 |---|---|
-| Farver | Karamel og guld. Lyst og mørkt tema, al tekst tjekket for kontrast |
-| Skrift | Outfit, leveret fra din egen server (ingen Google Fonts) |
-| Forside | Stor velkomst, "Sådan kommer du i gang" i tre trin, abonnementer som kort |
-| Logo og favicon | Vaffel-logoet bruges, indtil du uploader dit eget under Settings |
-| Knapper | Mørk tekst på guld i mørkt tema, så de kan læses |
-| Footer | Ryddet op. "Powered by Paymenter"-linket er bevaret, som Paymenter beder om |
-| Register-siden | Har et ekstra hook ("auth.register"), så Wizarr-extensionen kan vise "Opret konto med Discord" |
-| Lukket butik | Bruges Wizarr-extensionens "Only Discord members can see the shop", skjules abonnementerne på forsiden, og knappen fører til login/Discord |
+| Colours | Caramel and gold. Light and dark mode, all text checked for contrast |
+| Font | Outfit, served from your own server (no Google Fonts) |
+| Home page | Large welcome, "Sådan kommer du i gang" (getting started) in three steps, subscriptions as cards |
+| Logo and favicon | The waffle logo is used until you upload your own under Settings |
+| Buttons | Dark text on gold in dark mode, so they stay readable |
+| Footer | Tidied up. The "Powered by Paymenter" link is kept, as Paymenter asks |
+| Register page | Has an extra hook (`auth.register`) so the Wizarr extension can show "Opret konto med Discord" (create account with Discord) |
+| Closed shop | When the Wizarr extension's "Only Discord members can see the shop" is on, the subscriptions are hidden on the home page and the button leads to login/Discord |
 
-## Installation (LXC eller almindelig installation)
+## Installation (LXC or a regular install)
 
 ```bash
-git clone https://github.com/Lolles1911/homelab.git /tmp/homelab     # eller: cd /tmp/homelab && git pull
+git clone https://github.com/Lolles1911/homelab.git /tmp/homelab     # or: cd /tmp/homelab && git pull
 bash /tmp/homelab/paymenter-theme-wafflehub/install.sh /opt/paymenter
 ```
 
-Vælg så temaet: **Admin → Settings → Theme → `wafflehub` → Save**.
+Then select the theme: **Admin → Settings → Theme → `wafflehub` → Save**.
 
-Scriptet kopierer to mapper ind i Paymenter:
+The script copies two folders into Paymenter:
 
-- `themes/wafflehub` – skabeloner, farver og skrift
-- `public/wafflehub` – det færdigbyggede stylesheet
+- `themes/wafflehub`: templates, colours and font
+- `public/wafflehub`: the prebuilt stylesheet
 
-Du behøver ikke Node eller `npm` på serveren.
+You don't need Node or `npm` on the server.
 
-## Tilpasning
+## Customising
 
-Under **Admin → Settings → Theme**, når WaffleHub er valgt:
+Under **Admin → Settings → Theme**, with WaffleHub selected:
 
-- **Forsidens tekster:** lille etiket, overskrift, brødtekst (Markdown) og
-  knaptekst. Står butikkens navn i overskriften, får det guld-gradienten.
-- **"Sådan kommer du i gang"** kan slås fra.
-- **Alle farver** for lyst og mørkt tema, inkl. tekstfarven på knapper.
-  "Reset Colors" sætter dem tilbage til WaffleHub-farverne.
-- **Logo og favicon** uploader du under Settings → General som normalt.
+- **Home page texts:** small label, heading, body text (Markdown) and button
+  text. If the shop's name appears in the heading, it gets the gold gradient.
+- **"Sådan kommer du i gang"** (getting started) can be turned off.
+- **All colours** for light and dark mode, including the text colour on buttons.
+  "Reset Colors" puts them back to the WaffleHub colours.
+- **Logo and favicon** are uploaded under Settings → General as usual.
 
-Teksterne i de tre trin står i `themes/wafflehub/views/home.blade.php`.
+The texts in the three steps are in `themes/wafflehub/views/home.blade.php`.
 
-## Hvis du ændrer i stylesheetet eller skabelonerne
+## If you change the stylesheet or the templates
 
-Stylesheetet er bygget på forhånd mod Paymenter **v1.5.9**. Tilføjer du nye
-Tailwind-klasser, eller kører du en anden Paymenter-version, og ser noget
-forkert ud, så byg det igen på serveren (kræver Node 22):
+The stylesheet is prebuilt against Paymenter **v1.5.9**. If you add new
+Tailwind classes, or run another Paymenter version and something looks wrong,
+rebuild it on the server (requires Node 22):
 
 ```bash
 cd /opt/paymenter && npm install && npm run build wafflehub
 ```
 
-## Kendte forbehold
+## Known caveats
 
-- **Ikke kørt i en rigtig Paymenter endnu.** Stylesheetet er bygget med
-  Paymenters egne byggeværktøjer, og skærmbillederne viser det på samme
-  markup, men selve skabelonerne er ikke renderet af Paymenter. Det, der kan
-  drille, er logoet, faviconet og forsiden. Se efter dem først.
-- Temaet bruger standardtemaets JavaScript-build (`public/default`). Det er
-  der i en normal installation; scriptet stopper, hvis det mangler.
-- Temaet er dansk. Paymenters egne tekster (menu, kurv osv.) følger stadig det
-  sprog, Paymenter er sat til.
+- The theme uses the default theme's JavaScript build (`public/default`). It is
+  there in a normal install; the script stops if it is missing.
+- The theme's own texts are in Danish. Paymenter's own texts (menu, cart and so
+  on) still follow the language Paymenter is set to.
 
-## Filer
+## Files
 
-| Fil | Indhold |
+| File | Contents |
 |---|---|
-| `themes/wafflehub/theme.php` | Navn, farver og forsidens indstillinger |
-| `themes/wafflehub/css/app.css` | Stylesheet: standardtemaet + WaffleHub |
-| `themes/wafflehub/views/home.blade.php` | Forsiden |
-| `themes/wafflehub/views/layouts/` | Layout (indlæser filerne) og farvevariabler |
-| `themes/wafflehub/views/components/` | Logo, vaffel-mærke, knap, footer, editor |
-| `themes/wafflehub/views/auth/register.blade.php` | Register-siden med hooket til Discord-knappen |
+| `themes/wafflehub/theme.php` | Name, colours and home page settings |
+| `themes/wafflehub/css/app.css` | Stylesheet: the default theme + WaffleHub |
+| `themes/wafflehub/views/home.blade.php` | The home page |
+| `themes/wafflehub/views/layouts/` | Layout (loads the files) and colour variables |
+| `themes/wafflehub/views/components/` | Logo, waffle mark, button, footer, editor |
+| `themes/wafflehub/views/auth/register.blade.php` | The register page with the hook for the Discord button |
 | `themes/wafflehub/fonts/` | Outfit (SIL Open Font License) |
-| `public/wafflehub/` | Det færdigbyggede stylesheet og skrift |
-| `install.sh` | Kopierer temaet ind i Paymenter |
+| `public/wafflehub/` | The prebuilt stylesheet and font |
+| `install.sh` | Copies the theme into Paymenter |
