@@ -36,14 +36,8 @@ kundeområde og fakturaer virker som før og følger med, når Paymenter opdater
 
 ## Installation (LXC eller almindelig installation)
 
-Kør én kommando ad gangen. Repoet skal kunne hentes (gør det offentligt et
-øjeblik, eller brug et token som sidst).
-
 ```bash
-cd /tmp/homelab && git pull
-```
-
-```bash
+git clone https://github.com/Lolles1911/homelab.git /tmp/homelab     # eller: cd /tmp/homelab && git pull
 bash /tmp/homelab/paymenter-theme-wafflehub/install.sh /opt/paymenter
 ```
 
