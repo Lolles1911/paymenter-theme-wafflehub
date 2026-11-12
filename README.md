@@ -31,6 +31,7 @@ kundeområde og fakturaer virker som før og følger med, når Paymenter opdater
 | Logo og favicon | Vaffel-logoet bruges, indtil du uploader dit eget under Settings |
 | Knapper | Mørk tekst på guld i mørkt tema, så de kan læses |
 | Footer | Ryddet op. "Powered by Paymenter"-linket er bevaret, som Paymenter beder om |
+| Lukket butik | Bruges Wizarr-extensionens "Only Discord members can see the shop", skjules abonnementerne på forsiden, og knappen fører til login/Discord |
 
 ## Installation (LXC eller almindelig installation)
 

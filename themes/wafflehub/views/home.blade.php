@@ -5,6 +5,8 @@
     $badge = theme('hero_badge', 'Film og serier – samlet ét sted');
     $button = theme('hero_button', 'Se abonnementer');
     $markdown = ['allow_unsafe_links' => false, 'renderer' => ['soft_break' => '<br>']];
+    // Set by the Wizarr extension when only Discord members may see the shop.
+    $shopLocked = app()->bound('wizarr.shopLocked') && app('wizarr.shopLocked');
 @endphp
 <div>
     {{-- Hero ----------------------------------------------------------------}}
@@ -28,7 +30,12 @@
                 </div>
 
                 <div class="mt-8 flex flex-wrap gap-3">
-                    @if ($categories->isNotEmpty())
+                    @if ($shopLocked)
+                    <a href="{{ auth()->check() ? route('extensions.wizarr.discord') : route('login') }}" wire:navigate
+                        class="inline-flex items-center gap-2 rounded-lg bg-primary text-on-primary px-6 py-3 font-semibold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
+                        {{ auth()->check() ? 'Forbind Discord for at se abonnementer' : 'Log ind for at se abonnementer' }}
+                    </a>
+                    @elseif ($categories->isNotEmpty())
                     <a href="#abonnementer"
                         class="inline-flex items-center gap-2 rounded-lg bg-primary text-on-primary px-6 py-3 font-semibold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
                         {{ $button }}
@@ -83,8 +90,8 @@
     </section>
     @endif
 
-    {{-- Products ------------------------------------------------------------}}
-    @if ($categories->isNotEmpty())
+    {{-- Products (hidden while the shop is for Discord members only) -------}}
+    @if ($categories->isNotEmpty() && !$shopLocked)
     <section id="abonnementer" class="container py-6 scroll-mt-24">
         <h2 class="text-2xl font-bold">Abonnementer</h2>
 
