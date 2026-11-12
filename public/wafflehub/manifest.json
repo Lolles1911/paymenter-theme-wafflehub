@@ -1,0 +1,18 @@
+{
+  "themes/wafflehub/css/app.css": {
+    "file": "assets/app-B1GjP5lm.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "themes/wafflehub/css/app.css",
+    "isEntry": true,
+    "assets": [
+      "assets/outfit-latin-wght-normal-Bc-8i84L.woff2"
+    ]
+  },
+  "themes/wafflehub/fonts/outfit-latin-wght-normal.woff2": {
+    "file": "assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+    "src": "themes/wafflehub/fonts/outfit-latin-wght-normal.woff2"
+  }
+}
