@@ -1,9 +1,11 @@
 @php
-    $title = theme('hero_title', 'Velkommen til WaffleHub');
+    // An empty field means the default text, in the visitor's language (lang/).
+    $title = theme('hero_title', '') ?: __('wafflehub::home.title', ['name' => config('app.name')]);
     // Give the shop's own name the brand gradient where it appears in the headline.
     $titleHtml = str_replace(e(config('app.name')), '<span class="text-syrup">' . e(config('app.name')) . '</span>', e($title));
-    $badge = theme('hero_badge', 'Film og serier – samlet ét sted');
-    $button = theme('hero_button', 'Se abonnementer');
+    $badge = theme('hero_badge', '') ?: __('wafflehub::home.badge');
+    $button = theme('hero_button', '') ?: __('wafflehub::home.button');
+    $text = theme('home_page_text', '') ?: e(__('wafflehub::home.text'));
     $markdown = ['allow_unsafe_links' => false, 'renderer' => ['soft_break' => '<br>']];
     // Set by the Wizarr extension when only Discord members may see the shop.
     $shopLocked = app()->bound('wizarr.shopLocked') && app('wizarr.shopLocked');
@@ -26,17 +28,17 @@
                 <h1 class="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">{!! $titleHtml !!}</h1>
 
                 <div class="mt-5 max-w-xl text-lg leading-relaxed text-muted [&_a]:text-primary [&_a]:underline [&_p+p]:mt-3">
-                    {!! Str::markdown(theme('home_page_text', ''), $markdown) !!}
+                    {!! Str::markdown($text, $markdown) !!}
                 </div>
 
                 <div class="mt-8 flex flex-wrap gap-3">
                     @if ($shopLocked)
                     <a href="{{ auth()->check() ? route('extensions.wizarr.discord') : route('login') }}" wire:navigate
                         class="inline-flex items-center gap-2 rounded-lg bg-primary text-on-primary px-6 py-3 font-semibold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
-                        {{ auth()->check() ? 'Forbind Discord for at se abonnementer' : 'Log ind for at se abonnementer' }}
+                        {{ auth()->check() ? __('wafflehub::home.locked_connect') : __('wafflehub::home.locked_login') }}
                     </a>
                     @elseif ($categories->isNotEmpty())
-                    <a href="#abonnementer"
+                    <a href="#subscriptions"
                         class="inline-flex items-center gap-2 rounded-lg bg-primary text-on-primary px-6 py-3 font-semibold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
                         {{ $button }}
                         <x-ri-arrow-down-line class="size-5" />
@@ -68,12 +70,12 @@
     {{-- How it works --------------------------------------------------------}}
     @if (theme('show_steps', true))
     <section class="container py-14">
-        <h2 class="text-2xl font-bold">Sådan kommer du i gang</h2>
+        <h2 class="text-2xl font-bold">{{ __('wafflehub::home.steps_title') }}</h2>
         <ol class="mt-6 grid md:grid-cols-3 gap-5">
             @foreach ([
-                ['icon' => 'ri-shopping-bag-3-line', 'title' => 'Vælg et abonnement', 'text' => 'Find den plan, der passer dig, og betal online.'],
-                ['icon' => 'ri-mail-open-line', 'title' => 'Tjek din mail', 'text' => 'Du får en personlig invitation med det samme. Du finder den også under dine abonnementer.'],
-                ['icon' => 'ri-tv-2-line', 'title' => 'Se med', 'text' => 'Opret din bruger via linket, og se med på tv, mobil, tablet og computer.'],
+                ['icon' => 'ri-shopping-bag-3-line', 'title' => __('wafflehub::home.step1_title'), 'text' => __('wafflehub::home.step1_text')],
+                ['icon' => 'ri-mail-open-line', 'title' => __('wafflehub::home.step2_title'), 'text' => __('wafflehub::home.step2_text')],
+                ['icon' => 'ri-tv-2-line', 'title' => __('wafflehub::home.step3_title'), 'text' => __('wafflehub::home.step3_text')],
             ] as $i => $step)
             <li class="card p-6 flex gap-4">
                 <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -92,8 +94,8 @@
 
     {{-- Products (hidden while the shop is for Discord members only) -------}}
     @if ($categories->isNotEmpty() && !$shopLocked)
-    <section id="abonnementer" class="container py-6 scroll-mt-24">
-        <h2 class="text-2xl font-bold">Abonnementer</h2>
+    <section id="subscriptions" class="container py-6 scroll-mt-24">
+        <h2 class="text-2xl font-bold">{{ __('wafflehub::home.subscriptions') }}</h2>
 
         <div class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach ($categories as $category)

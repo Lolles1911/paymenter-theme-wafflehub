@@ -32,8 +32,16 @@ cp -r "$HERE/public/wafflehub" "$PAYMENTER/public/wafflehub"
 chown -R --reference="$PAYMENTER/themes/default" "$PAYMENTER/themes/wafflehub"
 chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/wafflehub"
 
+# As the user that owns storage/ (usually www-data): run as root, artisan can
+# leave root-owned files behind that the web server then cannot write.
 if command -v php >/dev/null 2>&1; then
-  (cd "$PAYMENTER" && php artisan view:clear >/dev/null && echo "Cleared Paymenter's view cache.")
+  OWNER="$(stat -c %U "$PAYMENTER/storage")"
+  CLEAR="cd '$PAYMENTER' && php artisan view:clear >/dev/null"
+  if { [ "$(id -un)" = "$OWNER" ] && bash -c "$CLEAR"; } || su -s /bin/bash "$OWNER" -c "$CLEAR"; then
+    echo "Cleared Paymenter's view cache."
+  else
+    echo "Could not clear the view cache. Run: su -s /bin/bash $OWNER -c 'php $PAYMENTER/artisan view:clear'" >&2
+  fi
 fi
 
 echo
