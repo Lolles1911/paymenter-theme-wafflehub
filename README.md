@@ -31,7 +31,7 @@ client area and invoices work as before and keep up when Paymenter is updated.
 | Logo and favicon | The waffle logo is used until you upload your own under Settings |
 | Buttons | Dark text on gold in dark mode, so they stay readable |
 | Footer | Tidied up. The "Powered by Paymenter" link is kept, as Paymenter asks |
-| Register page | Has an extra hook (`auth.register`) so the [Wizarr extension](https://github.com/Lolles1911/homelab) (`paymenter-wizarr/`) can show "Create an account with Discord" |
+| Register page | Has an extra hook (`auth.register`) so the [Paywarr extension](https://github.com/Lolles1911/paywarr) can show "Create an account with Discord" |
 | Closed shop | When the Wizarr extension's "Only Discord members can see the shop" is on, the subscriptions are hidden on the home page and the button leads to login/Discord |
 | Languages | The theme's texts follow the language Paymenter shows: English and Danish included |
 
