@@ -124,6 +124,7 @@ cd /opt/paymenter && npm install && npm run build wafflehub
 | `themes/wafflehub/views/layouts/` | Layout (loads the files, the light behind the pages, the poster wall on the sign-in pages) and colour variables |
 | `themes/wafflehub/views/components/` | Logo, waffle mark, poster wall and posters, button, footer, editor, (empty) light/dark switch |
 | `themes/wafflehub/views/auth/register.blade.php` | The register page with the hook for the Discord button |
+| `themes/wafflehub/views/products/index.blade.php` | A category page: heading, the categories as a menu, the products as cards |
 | `themes/wafflehub/views/products/show.blade.php` | The product page: the product and its price as two cards |
 | `themes/wafflehub/fonts/` | Space Grotesk (SIL Open Font License) |
 | `public/wafflehub/` | The prebuilt stylesheet and font |
