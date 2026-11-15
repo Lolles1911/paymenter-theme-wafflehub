@@ -31,6 +31,7 @@ They get WaffleHub's look from the stylesheet.
 | Front page | The headline over a wall of tilted posters that drift slowly; "How to get started" in three steps; subscriptions as cards |
 | Posters | Drawn in the theme's colours (six motifs, no images to load), or your own images, see *Customising* |
 | Sign-in pages | Sign in, sign up and password reset as a glass card over the poster wall |
+| Product page | The product on the left, the price and "Add to cart" in a card on the right (below on a phone) |
 | Panels | Every card, menu and box is frosted glass; the top bar has a thin accent line |
 | Buttons | The accent gradient with a soft shadow; input fields light up in the accent colour |
 | Logo and favicon | The waffle logo is used until you upload your own under Settings |
@@ -123,6 +124,7 @@ cd /opt/paymenter && npm install && npm run build wafflehub
 | `themes/wafflehub/views/layouts/` | Layout (loads the files, the light behind the pages, the poster wall on the sign-in pages) and colour variables |
 | `themes/wafflehub/views/components/` | Logo, waffle mark, poster wall and posters, button, footer, editor, (empty) light/dark switch |
 | `themes/wafflehub/views/auth/register.blade.php` | The register page with the hook for the Discord button |
+| `themes/wafflehub/views/products/show.blade.php` | The product page: the product and its price as two cards |
 | `themes/wafflehub/fonts/` | Space Grotesk (SIL Open Font License) |
 | `public/wafflehub/` | The prebuilt stylesheet and font |
 | `install.sh` | Copies the theme into Paymenter |
