@@ -1,7 +1,7 @@
-{{-- WaffleHub: the product page as two cards, the product and what it costs. Same data as the default theme's. --}}
+{{-- WaffleHub: the product page as two cards of the same height, the product and what it costs. Same data as the default theme's. --}}
 @php($canBuy = $product->stock !== 0 && $product->price()->available)
 <div class="container mt-14">
-    <div class="mx-auto max-w-5xl grid gap-6 md:grid-cols-[1fr_20rem] items-start">
+    <div class="mx-auto max-w-5xl grid gap-6 md:grid-cols-[1fr_20rem] items-start md:items-stretch">
         <div class="glass rounded-2xl overflow-hidden">
             @if ($product->image)
             <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}"
@@ -19,13 +19,13 @@
             </div>
         </div>
 
-        <aside class="glass rounded-2xl p-6 md:sticky md:top-24">
+        <aside class="glass rounded-2xl p-6 flex flex-col">
             @if ($product->stock === 0)
-            <span class="inline-block text-xs font-medium px-2.5 py-0.5 rounded-full bg-error/15 text-error mb-3">
+            <span class="self-start inline-block text-xs font-medium px-2.5 py-0.5 rounded-full bg-error/15 text-error mb-3">
                 {{ __('product.out_of_stock', ['product' => $product->name]) }}
             </span>
             @elseif ($product->stock > 0)
-            <span class="inline-block text-xs font-medium px-2.5 py-0.5 rounded-full bg-success/15 text-success mb-3">
+            <span class="self-start inline-block text-xs font-medium px-2.5 py-0.5 rounded-full bg-success/15 text-success mb-3">
                 {{ __('product.in_stock') }}
             </span>
             @endif
@@ -33,7 +33,7 @@
 
             @if ($canBuy)
             <a href="{{ route('products.checkout', ['category' => $category, 'product' => $product->slug]) }}"
-                wire:navigate class="block mt-6">
+                wire:navigate class="block mt-6 md:mt-auto md:pt-6">
                 <x-button.primary class="py-3!">
                     <x-ri-shopping-bag-4-fill class="size-5" />
                     {{ __('product.add_to_cart') }}
