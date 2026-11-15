@@ -86,7 +86,7 @@ version is still in the repo's history (commit `8c10916`).
 
 The theme's own texts (home page, the three steps, the closed-shop button) are
 in `themes/wafflehub/lang/<language>/home.php`: `en` and `da` are included.
-Paymenter loads them itself and picks the one matching the visitor's language
+The theme registers them itself and picks the one matching the visitor's language
 (the language switch, otherwise **Admin → Settings → General → Default
 Language**); languages without a file get English. To add one, copy `lang/en`
 to e.g. `lang/de` and translate the texts on the right. Paymenter's own texts

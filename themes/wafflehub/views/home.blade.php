@@ -1,4 +1,7 @@
 @php
+    // The theme's texts (lang/). Newer Paymenter versions register them by
+    // themselves; v1.5.9 doesn't, so do it here. Registering twice is harmless.
+    app('translator')->addNamespace('wafflehub', base_path('themes/wafflehub/lang'));
     // An empty field means the default text, in the visitor's language (lang/).
     $title = theme('hero_title', '') ?: __('wafflehub::home.title', ['name' => config('app.name')]);
     // The shop's own name gets the accent gradient where it appears in the headline.
