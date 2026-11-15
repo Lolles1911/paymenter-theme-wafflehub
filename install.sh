@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installs the WaffleHub theme into a Paymenter installation.
+# Installs the themes in this repo (WaffleHub and Afterglow) into a Paymenter installation.
 #
 #   bash install.sh                    # Paymenter in /opt/paymenter (LXC / plain install)
 #   bash install.sh /var/www/paymenter
@@ -17,20 +17,22 @@ if [ ! -f "$PAYMENTER/artisan" ] || [ ! -d "$PAYMENTER/themes/default" ]; then
   exit 1
 fi
 
-# WaffleHub borrows the default theme's JavaScript build instead of shipping its own.
+# The themes borrow the default theme's JavaScript build instead of shipping their own.
 if [ ! -f "$PAYMENTER/public/default/manifest.json" ]; then
   echo "$PAYMENTER/public/default/manifest.json is missing: the default theme has not been built." >&2
-  echo "WaffleHub needs it. Run 'npm install && npm run build' in $PAYMENTER first." >&2
+  echo "The themes need it. Run 'npm install && npm run build' in $PAYMENTER first." >&2
   exit 1
 fi
 
-rm -rf "$PAYMENTER/themes/wafflehub" "$PAYMENTER/public/wafflehub"
-cp -r "$HERE/themes/wafflehub" "$PAYMENTER/themes/wafflehub"
-cp -r "$HERE/public/wafflehub" "$PAYMENTER/public/wafflehub"
+for THEME in wafflehub afterglow; do
+  rm -rf "$PAYMENTER/themes/$THEME" "$PAYMENTER/public/$THEME"
+  cp -r "$HERE/themes/$THEME" "$PAYMENTER/themes/$THEME"
+  cp -r "$HERE/public/$THEME" "$PAYMENTER/public/$THEME"
 
-# Same owner as the files Paymenter already serves.
-chown -R --reference="$PAYMENTER/themes/default" "$PAYMENTER/themes/wafflehub"
-chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/wafflehub"
+  # Same owner as the files Paymenter already serves.
+  chown -R --reference="$PAYMENTER/themes/default" "$PAYMENTER/themes/$THEME"
+  chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/$THEME"
+done
 
 # As the user that owns storage/ (usually www-data): run as root, artisan can
 # leave root-owned files behind that the web server then cannot write.
@@ -45,4 +47,4 @@ if command -v php >/dev/null 2>&1; then
 fi
 
 echo
-echo "Installed. Now choose it in Paymenter: Admin -> Settings -> Theme -> 'wafflehub' -> Save."
+echo "Installed. Now choose one in Paymenter: Admin -> Settings -> Theme -> 'wafflehub' or 'afterglow' -> Save."

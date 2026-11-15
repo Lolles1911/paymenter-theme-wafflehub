@@ -333,3 +333,58 @@ input[type="radio"]:checked {
     transform: translateY(-2px);
     border-color: hsl(var(--color-primary) / 0.45);
 }
+
+/* --- Sign-in pages: the form as a glass card over the poster wall ---------- */
+
+.ag-auth-wall {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+.ag-auth-wall .ag-wall-grid {
+    left: -10%;
+    right: -10%;
+    opacity: 0.55;
+}
+
+.ag-auth-wall .ag-wall-shade {
+    background:
+        radial-gradient(ellipse 60% 70% at 50% 45%, hsl(var(--color-background) / 0.92), hsl(var(--color-background) / 0.55) 100%),
+        linear-gradient(0deg, hsl(var(--color-background)) 0%, transparent 30%);
+}
+
+/* The default sign-in forms carry "bg-primary-800", a colour that doesn't exist. */
+form.bg-primary-800 {
+    max-width: 28rem;
+    margin: 3.5rem auto 0;
+    padding: 0 2rem 2.25rem;
+    border-radius: 1.25rem;
+    background: hsl(var(--color-background-secondary) / 0.8);
+    border: 1px solid hsl(var(--color-neutral));
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05), 0 40px 90px -40px hsl(var(--color-primary) / 0.5);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    backdrop-filter: blur(20px) saturate(130%);
+}
+
+form#register.bg-primary-800 {
+    max-width: 40rem;
+}
+
+form.bg-primary-800 > div:first-child {
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+form.bg-primary-800 h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+@media (max-width: 639px) {
+    form.bg-primary-800 {
+        width: calc(100% - 2rem);
+        margin-top: 1.5rem;
+        padding-inline: 1.25rem;
+    }
+}

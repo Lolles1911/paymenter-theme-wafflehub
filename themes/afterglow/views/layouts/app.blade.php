@@ -50,6 +50,10 @@
 >
     {{-- Afterglow: the soft light behind every page. --}}
     <div class="ag-backdrop" aria-hidden="true"><span></span><span></span><span></span></div>
+    {{-- Afterglow: the sign-in pages get the poster wall behind the form. --}}
+    @if (request()->is('login', 'register', 'password/*', '2fa', 'email/verify*'))
+    <div class="ag-auth-wall"><x-poster-wall /></div>
+    @endif
     {!! hook('body') !!}
     <x-navigation />
     <div class="w-full flex flex-grow">
