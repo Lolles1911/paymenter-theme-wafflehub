@@ -11,10 +11,11 @@
     $shopLocked = app()->bound('wizarr.shopLocked') && app('wizarr.shopLocked');
 @endphp
 <div>
-    {{-- Hero ----------------------------------------------------------------}}
-    <section class="relative overflow-hidden">
-        <div class="container relative pt-16 pb-20 md:pt-24 md:pb-28 grid md:grid-cols-[1.2fr_0.8fr] gap-12 md:gap-16 items-center">
-            <div>
+    {{-- Hero: the headline over a wall of posters --------------------------}}
+    <section class="relative overflow-hidden ag-hero">
+        <x-poster-wall />
+        <div class="container relative pt-20 pb-24 md:pt-32 md:pb-36">
+            <div class="max-w-2xl">
                 @if ($badge)
                 <span class="inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-sm font-medium text-muted">
                     <span class="relative flex size-2">
@@ -56,23 +57,6 @@
                 </div>
             </div>
 
-            {{-- Next to the headline: the image from the theme's settings, or a drawn streaming screen --}}
-            <div class="hidden md:block">
-                @if (theme('hero_image', ''))
-                <img src="{{ Storage::url(theme('hero_image')) }}" alt="" class="ag-hero-image">
-                @else
-                <div class="ag-screen glass" aria-hidden="true">
-                    <div class="ag-screen-hero">
-                        <div class="ag-screen-play">
-                            <b><x-ri-play-fill class="size-5" /></b>
-                            <span class="flex flex-col gap-1.5"><span class="ag-line w-28"></span><span class="ag-line ag-dim w-16"></span></span>
-                        </div>
-                    </div>
-                    <div class="ag-progress"><span></span></div>
-                    <div class="ag-posters"><span></span><span></span><span></span><span></span></div>
-                </div>
-                @endif
-            </div>
         </div>
     </section>
 

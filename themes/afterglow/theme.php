@@ -46,13 +46,11 @@ return [
             'description' => 'Empty = the default text in the visitor\'s language.',
         ],
         [
-            'name' => 'hero_image',
-            'label' => 'Front page: image next to the headline (optional)',
-            'type' => 'file',
-            'accept' => ['image/*'],
-            'visibility' => 'public',
-            'required' => false,
-            'description' => 'Empty = a drawn streaming screen in the theme\'s colours.',
+            'name' => 'poster_images',
+            'label' => 'Front page: poster wall images (optional)',
+            'type' => 'textarea',
+            'default' => '',
+            'description' => 'One image address per line, e.g. posters you have uploaded or from your media server. Empty = drawn posters in the theme\'s colours. Images from another site are loaded from that site by every visitor.',
         ],
         [
             'name' => 'show_steps',

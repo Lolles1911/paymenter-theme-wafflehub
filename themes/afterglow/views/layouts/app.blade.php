@@ -22,8 +22,8 @@
     @if (config('settings.favicon'))
     <link rel="icon" href="{{ Storage::url(config('settings.favicon')) }}">
     @else
-    {{-- Afterglow: the Afterglow mark, until a favicon is uploaded under Settings. --}}
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,{{ rawurlencode(view('components.afterglow-mark', ['attributes' => new \Illuminate\View\ComponentAttributeBag(['xmlns' => 'http://www.w3.org/2000/svg'])])->render()) }}">
+    {{-- Afterglow: the WaffleHub mark, until a favicon is uploaded under Settings. --}}
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,{{ rawurlencode(view('components.waffle-mark', ['attributes' => new \Illuminate\View\ComponentAttributeBag(['xmlns' => 'http://www.w3.org/2000/svg'])])->render()) }}">
     @endif
     @isset($title)
     <meta content="{{ isset($title) ? config('app.name', 'Paymenter') . ' - ' . $title : config('app.name', 'Paymenter') }}" property="og:title">
