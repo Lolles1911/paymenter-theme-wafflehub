@@ -1,4 +1,4 @@
-<footer class="w-full mt-24 border-t border-neutral bg-background-secondary">
+<footer class="ag-footer w-full mt-24">
     <div class="container py-12">
         <div class="flex flex-col md:flex-row justify-between gap-8 md:items-center">
             <div class="flex flex-col gap-4 items-start">
@@ -13,7 +13,7 @@
                 </p>
             </div>
             {{-- Paymenter is free and open source; the default theme asks to keep this link, and so does this one. --}}
-            <a class="self-start md:self-auto border border-neutral bg-background px-3 py-2 rounded-lg transition-colors flex items-center gap-2 text-muted hover:text-base" href="https://paymenter.org" target="_blank" rel="noopener">
+            <a class="self-start md:self-auto border border-neutral bg-background/60 px-3 py-2 rounded-lg transition-colors flex items-center gap-2 text-muted hover:text-base hover:border-primary/60" href="https://paymenter.org" target="_blank" rel="noopener">
                 <span class="text-sm font-medium tracking-tight">{{ __('Powered by') }}</span>
                 <span class="text-sm font-semibold">Paymenter</span>
             </a>

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installs the themes in this repo (WaffleHub and Afterglow) into a Paymenter installation.
+# Installs the WaffleHub theme into a Paymenter installation.
 #
 #   bash install.sh                    # Paymenter in /opt/paymenter (LXC / plain install)
 #   bash install.sh /var/www/paymenter
@@ -17,14 +17,14 @@ if [ ! -f "$PAYMENTER/artisan" ] || [ ! -d "$PAYMENTER/themes/default" ]; then
   exit 1
 fi
 
-# The themes borrow the default theme's JavaScript build instead of shipping their own.
+# WaffleHub borrows the default theme's JavaScript build instead of shipping its own.
 if [ ! -f "$PAYMENTER/public/default/manifest.json" ]; then
   echo "$PAYMENTER/public/default/manifest.json is missing: the default theme has not been built." >&2
-  echo "The themes need it. Run 'npm install && npm run build' in $PAYMENTER first." >&2
+  echo "WaffleHub needs it. Run 'npm install && npm run build' in $PAYMENTER first." >&2
   exit 1
 fi
 
-for THEME in wafflehub afterglow; do
+for THEME in wafflehub; do
   rm -rf "$PAYMENTER/themes/$THEME" "$PAYMENTER/public/$THEME"
   cp -r "$HERE/themes/$THEME" "$PAYMENTER/themes/$THEME"
   cp -r "$HERE/public/$THEME" "$PAYMENTER/public/$THEME"
@@ -47,4 +47,4 @@ if command -v php >/dev/null 2>&1; then
 fi
 
 echo
-echo "Installed. Now choose one in Paymenter: Admin -> Settings -> Theme -> 'wafflehub' or 'afterglow' -> Save."
+echo "Installed. If WaffleHub isn't selected yet: Admin -> Settings -> Theme -> 'wafflehub' -> Save."

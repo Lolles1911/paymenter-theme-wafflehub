@@ -1,10 +1,11 @@
 <?php
 
 /*
- * WaffleHub - a Paymenter theme.
+ * WaffleHub - a dark Paymenter theme with a soft violet-to-pink glow.
  *
  * Built on top of Paymenter's default theme: every page that is not in
  * views/ here comes from themes/default, so Paymenter updates keep working.
+ * The default pages get WaffleHub's look from css/app.css.
  *
  * Colours are HSL. The admin colour pickers save them as "hsl(h, s%, l%)".
  */
@@ -28,7 +29,7 @@ return [
             'label' => 'Front page: headline',
             'type' => 'text',
             'default' => '',
-            'description' => 'Empty = "Welcome to <shop name>" in the visitor\'s language.',
+            'description' => 'Empty = "Welcome to <shop name>" in the visitor\'s language. The shop\'s name gets the accent gradient.',
         ],
         [
             'name' => 'home_page_text',
@@ -45,11 +46,26 @@ return [
             'description' => 'Empty = the default text in the visitor\'s language.',
         ],
         [
+            'name' => 'poster_images',
+            'label' => 'Front page: poster wall images (optional)',
+            'type' => 'textarea',
+            'default' => '',
+            'description' => 'One image address per line, e.g. posters you have uploaded or from your media server. Empty = drawn posters in the theme\'s colours. Images from another site are loaded from that site by every visitor.',
+        ],
+        [
             'name' => 'show_steps',
             'label' => 'Front page: show "How to get started"',
             'type' => 'checkbox',
             'default' => true,
             'database_type' => 'boolean',
+        ],
+        [
+            'name' => 'motion',
+            'label' => 'Moving light in the background',
+            'type' => 'checkbox',
+            'default' => true,
+            'database_type' => 'boolean',
+            'description' => 'The slowly moving light behind the pages. Always off for visitors who ask their device for less motion.',
         ],
 
         // --- Same options as the default theme -----------------------------
@@ -88,26 +104,18 @@ return [
             'default' => 'logo-and-name',
         ],
 
-        // --- Colours: light mode -------------------------------------------
-        ['name' => 'primary', 'label' => 'Primary - Brand Color (Light)', 'type' => 'color', 'default' => 'hsl(26, 85%, 37%)'],
-        ['name' => 'on-primary', 'label' => 'Text on Primary (Light)', 'type' => 'color', 'default' => 'hsl(0, 0%, 100%)'],
-        ['name' => 'secondary', 'label' => 'Secondary - Accent Color (Light)', 'type' => 'color', 'default' => 'hsl(40, 92%, 50%)'],
-        ['name' => 'neutral', 'label' => 'Borders, Accents... (Light)', 'type' => 'color', 'default' => 'hsl(35, 35%, 86%)'],
-        ['name' => 'base', 'label' => 'Base - Text Color (Light)', 'type' => 'color', 'default' => 'hsl(24, 35%, 12%)'],
-        ['name' => 'muted', 'label' => 'Muted - Text Color (Light)', 'type' => 'color', 'default' => 'hsl(25, 12%, 40%)'],
-        ['name' => 'inverted', 'label' => 'Inverted - Text Color (Light)', 'type' => 'color', 'default' => 'hsl(40, 60%, 98%)'],
-        ['name' => 'background', 'label' => 'Background - Color (Light)', 'type' => 'color', 'default' => 'hsl(40, 60%, 98%)'],
-        ['name' => 'background-secondary', 'label' => 'Background - Secondary Color (Light)', 'type' => 'color', 'default' => 'hsl(38, 50%, 95%)'],
-
-        // --- Colours: dark mode --------------------------------------------
-        ['name' => 'dark-primary', 'label' => 'Primary - Brand Color (Dark)', 'type' => 'color', 'default' => 'hsl(38, 92%, 56%)'],
-        ['name' => 'dark-on-primary', 'label' => 'Text on Primary (Dark)', 'type' => 'color', 'default' => 'hsl(24, 40%, 9%)'],
-        ['name' => 'dark-secondary', 'label' => 'Secondary - Accent Color (Dark)', 'type' => 'color', 'default' => 'hsl(28, 85%, 52%)'],
-        ['name' => 'dark-neutral', 'label' => 'Borders, Accents... (Dark)', 'type' => 'color', 'default' => 'hsl(25, 14%, 19%)'],
-        ['name' => 'dark-base', 'label' => 'Base - Text Color (Dark)', 'type' => 'color', 'default' => 'hsl(38, 40%, 94%)'],
-        ['name' => 'dark-muted', 'label' => 'Muted - Text Color (Dark)', 'type' => 'color', 'default' => 'hsl(30, 10%, 62%)'],
-        ['name' => 'dark-inverted', 'label' => 'Inverted - Text Color (Dark)', 'type' => 'color', 'default' => 'hsl(24, 20%, 8%)'],
-        ['name' => 'dark-background', 'label' => 'Background - Color (Dark)', 'type' => 'color', 'default' => 'hsl(24, 18%, 7%)'],
-        ['name' => 'dark-background-secondary', 'label' => 'Background - Secondary Color (Dark)', 'type' => 'color', 'default' => 'hsl(24, 15%, 10%)'],
+        // --- Colours (dark only) -------------------------------------------
+        // The accent gradient runs from Primary to Secondary. The keys start with
+        // "night-" so colours saved for the earlier, caramel WaffleHub don't apply.
+        ['name' => 'night-primary', 'label' => 'Primary - Accent (buttons, links)', 'type' => 'color', 'default' => 'hsl(266, 85%, 72%)'],
+        ['name' => 'night-secondary', 'label' => 'Secondary - End of the accent gradient', 'type' => 'color', 'default' => 'hsl(325, 80%, 70%)'],
+        ['name' => 'night-tertiary', 'label' => 'A third tone (drawn screen on the front page)', 'type' => 'color', 'default' => 'hsl(230, 70%, 62%)'],
+        ['name' => 'night-on-primary', 'label' => 'Text on the accent buttons', 'type' => 'color', 'default' => 'hsl(252, 60%, 6%)'],
+        ['name' => 'night-neutral', 'label' => 'Borders, Accents...', 'type' => 'color', 'default' => 'hsl(252, 28%, 19%)'],
+        ['name' => 'night-base', 'label' => 'Base - Text Color', 'type' => 'color', 'default' => 'hsl(240, 40%, 97%)'],
+        ['name' => 'night-muted', 'label' => 'Muted - Text Color', 'type' => 'color', 'default' => 'hsl(248, 20%, 72%)'],
+        ['name' => 'night-inverted', 'label' => 'Inverted - Text Color', 'type' => 'color', 'default' => 'hsl(252, 45%, 5%)'],
+        ['name' => 'night-background', 'label' => 'Background - Color', 'type' => 'color', 'default' => 'hsl(252, 45%, 4%)'],
+        ['name' => 'night-background-secondary', 'label' => 'Background - Cards and panels', 'type' => 'color', 'default' => 'hsl(252, 38%, 9%)'],
     ],
 ];
