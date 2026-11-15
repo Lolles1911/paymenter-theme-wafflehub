@@ -22,7 +22,7 @@
     @if (config('settings.favicon'))
     <link rel="icon" href="{{ Storage::url(config('settings.favicon')) }}">
     @else
-    {{-- Afterglow: the neon mark, until a favicon is uploaded under Settings. --}}
+    {{-- Afterglow: the Afterglow mark, until a favicon is uploaded under Settings. --}}
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,{{ rawurlencode(view('components.afterglow-mark', ['attributes' => new \Illuminate\View\ComponentAttributeBag(['xmlns' => 'http://www.w3.org/2000/svg'])])->render()) }}">
     @endif
     @isset($title)
@@ -48,7 +48,7 @@
     x-cloak
     x-data="{ theme: 'dark', isDark: true }"
 >
-    {{-- Afterglow: the neon light behind every page. --}}
+    {{-- Afterglow: the soft light behind every page. --}}
     <div class="ag-backdrop" aria-hidden="true"><span></span><span></span><span></span></div>
     {!! hook('body') !!}
     <x-navigation />

@@ -7,6 +7,6 @@ $darkLogo = config('settings.logo_dark');
 @if ($darkLogo || $lightLogo)
 <img src="{{ Storage::url($darkLogo ?: $lightLogo) }}" alt="{{ config('app.name') }}" {{ $attributes->merge(['class' => 'w-auto inline-block']) }}>
 @else
-{{-- No logo uploaded under Settings: the neon mark. --}}
-<x-afterglow-mark {{ $attributes->merge(['class' => 'w-auto aspect-square inline-block shrink-0 ag-mark']) }} />
+{{-- No logo uploaded under Settings: the Afterglow mark. --}}
+<x-afterglow-mark {{ $attributes->merge(['class' => 'w-auto aspect-square inline-block shrink-0 ']) }} />
 @endif

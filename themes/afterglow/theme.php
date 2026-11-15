@@ -1,11 +1,11 @@
 <?php
 
 /*
- * Afterglow - a neon Paymenter theme. Dark only.
+ * Afterglow - a dark Paymenter theme with a soft violet-to-pink glow.
  *
  * Built on top of Paymenter's default theme: every page that is not in
  * views/ here comes from themes/default, so Paymenter updates keep working.
- * The default pages get the neon look from css/app.css.
+ * The default pages get Afterglow's look from css/app.css.
  *
  * Colours are HSL. The admin colour pickers save them as "hsl(h, s%, l%)".
  */
@@ -29,7 +29,7 @@ return [
             'label' => 'Front page: headline',
             'type' => 'text',
             'default' => '',
-            'description' => 'Empty = "Welcome to <shop name>" in the visitor\'s language. The shop\'s name glows.',
+            'description' => 'Empty = "Welcome to <shop name>" in the visitor\'s language. The shop\'s name gets the accent gradient.',
         ],
         [
             'name' => 'home_page_text',
@@ -46,6 +46,15 @@ return [
             'description' => 'Empty = the default text in the visitor\'s language.',
         ],
         [
+            'name' => 'hero_image',
+            'label' => 'Front page: image next to the headline (optional)',
+            'type' => 'file',
+            'accept' => ['image/*'],
+            'visibility' => 'public',
+            'required' => false,
+            'description' => 'Empty = a drawn streaming screen in the theme\'s colours.',
+        ],
+        [
             'name' => 'show_steps',
             'label' => 'Front page: show "How to get started"',
             'type' => 'checkbox',
@@ -54,7 +63,7 @@ return [
         ],
         [
             'name' => 'motion',
-            'label' => 'Animated glow',
+            'label' => 'Moving light in the background',
             'type' => 'checkbox',
             'default' => true,
             'database_type' => 'boolean',
@@ -98,10 +107,11 @@ return [
         ],
 
         // --- Colours (dark only) -------------------------------------------
-        ['name' => 'primary', 'label' => 'Primary - Neon (buttons, links, glow)', 'type' => 'color', 'default' => 'hsl(318, 100%, 64%)'],
-        ['name' => 'secondary', 'label' => 'Secondary - Second neon', 'type' => 'color', 'default' => 'hsl(188, 100%, 52%)'],
-        ['name' => 'tertiary', 'label' => 'Middle of the neon gradient', 'type' => 'color', 'default' => 'hsl(266, 92%, 68%)'],
-        ['name' => 'on-primary', 'label' => 'Text on the neon buttons', 'type' => 'color', 'default' => 'hsl(252, 60%, 6%)'],
+        // The accent gradient runs from Primary to Secondary.
+        ['name' => 'primary', 'label' => 'Primary - Accent (buttons, links)', 'type' => 'color', 'default' => 'hsl(266, 85%, 72%)'],
+        ['name' => 'secondary', 'label' => 'Secondary - End of the accent gradient', 'type' => 'color', 'default' => 'hsl(325, 80%, 70%)'],
+        ['name' => 'tertiary', 'label' => 'A third tone (drawn screen on the front page)', 'type' => 'color', 'default' => 'hsl(230, 70%, 62%)'],
+        ['name' => 'on-primary', 'label' => 'Text on the accent buttons', 'type' => 'color', 'default' => 'hsl(252, 60%, 6%)'],
         ['name' => 'neutral', 'label' => 'Borders, Accents...', 'type' => 'color', 'default' => 'hsl(252, 28%, 19%)'],
         ['name' => 'base', 'label' => 'Base - Text Color', 'type' => 'color', 'default' => 'hsl(240, 40%, 97%)'],
         ['name' => 'muted', 'label' => 'Muted - Text Color', 'type' => 'color', 'default' => 'hsl(248, 20%, 72%)'],

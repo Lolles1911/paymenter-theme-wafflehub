@@ -1,4 +1,4 @@
-{{-- Afterglow: the neon button. Same behaviour as the default theme's. --}}
+{{-- Afterglow: the accent button. Same behaviour as the default theme's. --}}
 <button 
     {{ $attributes->merge(['class' => 'ag-button flex items-center gap-2 justify-center text-sm font-semibold py-2.5 lg:py-2 px-4.5 rounded-lg w-full cursor-pointer disabled:cursor-not-allowed disabled:opacity-50']) }}>
     @if (isset($type) && $type === 'submit')

@@ -1,8 +1,8 @@
 @php
     // An empty field means the default text, in the visitor's language (lang/).
     $title = theme('hero_title', '') ?: __('afterglow::home.title', ['name' => config('app.name')]);
-    // The shop's own name glows where it appears in the headline.
-    $titleHtml = str_replace(e(config('app.name')), '<span class="text-neon">' . e(config('app.name')) . '</span>', e($title));
+    // The shop's own name gets the accent gradient where it appears in the headline.
+    $titleHtml = str_replace(e(config('app.name')), '<span class="text-glow">' . e(config('app.name')) . '</span>', e($title));
     $badge = theme('hero_badge', '') ?: __('afterglow::home.badge');
     $button = theme('hero_button', '') ?: __('afterglow::home.button');
     $text = theme('home_page_text', '') ?: e(__('afterglow::home.text'));
@@ -18,8 +18,7 @@
                 @if ($badge)
                 <span class="inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-sm font-medium text-muted">
                     <span class="relative flex size-2">
-                        <span class="absolute inline-flex size-full rounded-full bg-secondary opacity-75 motion-safe:animate-ping"></span>
-                        <span class="relative inline-flex size-2 rounded-full bg-secondary"></span>
+                        <span class="relative inline-flex size-2 rounded-full bg-primary"></span>
                     </span>
                     {{ $badge }}
                 </span>
@@ -45,24 +44,34 @@
                     @endif
                     @guest
                     <a href="{{ route('login') }}" wire:navigate
-                        class="inline-flex items-center rounded-xl glass px-6 py-3.5 font-semibold hover:border-secondary/70 hover:shadow-[0_0_24px_-6px_hsl(var(--color-secondary)/0.7)] transition">
+                        class="inline-flex items-center rounded-xl glass px-6 py-3.5 font-semibold hover:border-primary/50 transition">
                         {{ __('navigation.login') }}
                     </a>
                     @else
                     <a href="{{ route('dashboard') }}" wire:navigate
-                        class="inline-flex items-center rounded-xl glass px-6 py-3.5 font-semibold hover:border-secondary/70 hover:shadow-[0_0_24px_-6px_hsl(var(--color-secondary)/0.7)] transition">
+                        class="inline-flex items-center rounded-xl glass px-6 py-3.5 font-semibold hover:border-primary/50 transition">
                         {{ __('navigation.dashboard') }}
                     </a>
                     @endguest
                 </div>
             </div>
 
-            {{-- The sun setting on a neon horizon --}}
-            <div class="hidden md:block" aria-hidden="true">
-                <div class="ag-horizon">
-                    <div class="ag-sun"></div>
-                    <div class="ag-floor"></div>
+            {{-- Next to the headline: the image from the theme's settings, or a drawn streaming screen --}}
+            <div class="hidden md:block">
+                @if (theme('hero_image', ''))
+                <img src="{{ Storage::url(theme('hero_image')) }}" alt="" class="ag-hero-image">
+                @else
+                <div class="ag-screen glass" aria-hidden="true">
+                    <div class="ag-screen-hero">
+                        <div class="ag-screen-play">
+                            <b><x-ri-play-fill class="size-5" /></b>
+                            <span class="flex flex-col gap-1.5"><span class="ag-line w-28"></span><span class="ag-line ag-dim w-16"></span></span>
+                        </div>
+                    </div>
+                    <div class="ag-progress"><span></span></div>
+                    <div class="ag-posters"><span></span><span></span><span></span><span></span></div>
                 </div>
+                @endif
             </div>
         </div>
     </section>
@@ -77,12 +86,12 @@
                 ['icon' => 'ri-mail-open-line', 'title' => __('afterglow::home.step2_title'), 'text' => __('afterglow::home.step2_text')],
                 ['icon' => 'ri-tv-2-line', 'title' => __('afterglow::home.step3_title'), 'text' => __('afterglow::home.step3_text')],
             ] as $i => $step)
-            <li class="ag-step glass rounded-2xl p-6">
+            <li class="glass rounded-2xl p-6">
                 <div class="flex items-center justify-between">
                     <span class="ag-icon">
                         <x-dynamic-component :component="$step['icon']" class="size-6" />
                     </span>
-                    <span class="text-4xl font-bold text-neutral" style="-webkit-text-stroke:1px hsl(var(--color-tertiary) / .6);color:transparent">0{{ $i + 1 }}</span>
+                    <span class="text-3xl font-bold text-muted/40">0{{ $i + 1 }}</span>
                 </div>
                 <h3 class="mt-5 text-lg font-semibold">{{ $step['title'] }}</h3>
                 <p class="mt-1.5 text-muted">{{ $step['text'] }}</p>
