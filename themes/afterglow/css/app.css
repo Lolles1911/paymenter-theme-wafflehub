@@ -1,0 +1,373 @@
+/*
+ * Afterglow - a neon theme for Paymenter. Dark only.
+ *
+ * Starts from the default theme's stylesheet. That brings in Tailwind, its
+ * plugins and utilities, the editor styles, and makes Tailwind scan the
+ * default theme's views - which are the pages this theme does not override.
+ * Those pages get the neon look from the rules further down, which work on
+ * the classes the default views already use.
+ */
+@import "../../default/css/app.css";
+
+/* The pages this theme overrides. */
+@source "../views";
+
+/* Self-hosted, so no visitor data goes to a font CDN. SIL Open Font License, see fonts/OFL.txt. */
+@font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-display: swap;
+    font-weight: 300 700;
+    src: url("../fonts/space-grotesk-latin-wght-normal.woff2") format("woff2-variations");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+    --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+    --color-on-primary: hsl(var(--color-on-primary));
+    --color-tertiary: hsl(var(--color-tertiary));
+}
+
+/* The neon gradient, for a word in a headline. */
+@utility text-neon {
+    background-image: linear-gradient(95deg, hsl(var(--color-primary)), hsl(var(--color-tertiary)) 50%, hsl(var(--color-secondary)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 18px hsl(var(--color-primary) / 0.35));
+}
+
+/* A panel of frosted glass with a faint neon edge. */
+@utility glass {
+    background: linear-gradient(160deg, hsl(var(--color-background-secondary) / 0.78), hsl(var(--color-background-secondary) / 0.55));
+    border: 1px solid hsl(var(--color-neutral));
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.04), 0 20px 50px -30px hsl(var(--color-tertiary) / 0.45);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* Unlayered from here on, on purpose: these must win over Tailwind's utilities. */
+
+html {
+    background: hsl(var(--color-background));
+}
+
+body {
+    background: transparent;
+}
+
+::selection {
+    background: hsl(var(--color-primary) / 0.35);
+    color: hsl(var(--color-base));
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.02em;
+}
+
+/* --- The light behind the pages --------------------------------------- */
+
+.ag-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, hsl(var(--color-tertiary) / 0.22), transparent 70%),
+        linear-gradient(hsl(var(--color-background)), hsl(var(--color-background)));
+}
+
+/* A faint grid that fades out towards the bottom, like a horizon. */
+.ag-backdrop::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, hsl(var(--color-tertiary) / 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, hsl(var(--color-tertiary) / 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+
+.ag-backdrop span {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    opacity: 0.5;
+}
+
+.ag-backdrop span:nth-child(1) {
+    width: 42rem;
+    height: 42rem;
+    left: -14rem;
+    top: -16rem;
+    background: hsl(var(--color-primary) / 0.55);
+}
+
+.ag-backdrop span:nth-child(2) {
+    width: 38rem;
+    height: 38rem;
+    right: -14rem;
+    top: 10rem;
+    background: hsl(var(--color-secondary) / 0.4);
+}
+
+.ag-backdrop span:nth-child(3) {
+    width: 46rem;
+    height: 30rem;
+    left: 20%;
+    bottom: -22rem;
+    background: hsl(var(--color-tertiary) / 0.45);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ag-motion .ag-backdrop span:nth-child(1) { animation: ag-drift 22s ease-in-out infinite alternate; }
+    .ag-motion .ag-backdrop span:nth-child(2) { animation: ag-drift 28s ease-in-out infinite alternate-reverse; }
+    .ag-motion .ag-backdrop span:nth-child(3) { animation: ag-drift 34s ease-in-out infinite alternate; }
+}
+
+@keyframes ag-drift {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(6rem, 4rem, 0) scale(1.15); }
+}
+
+/* --- Panels: every card, menu and box of the default pages becomes glass -- */
+
+.bg-background-secondary {
+    background-color: hsl(var(--color-background-secondary) / 0.72);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+}
+
+.rounded-lg.bg-background-secondary,
+.rounded-xl.bg-background-secondary,
+.rounded-md.bg-background-secondary {
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.04);
+}
+
+/* Links that look like cards light up their edge. */
+a.bg-background-secondary:hover,
+a:hover > .bg-background-secondary.border {
+    border-color: hsl(var(--color-primary) / 0.6);
+    box-shadow: 0 0 0 1px hsl(var(--color-primary) / 0.25), 0 12px 40px -18px hsl(var(--color-primary) / 0.6);
+}
+
+/* The top bar and the side menu: glass with a neon line. */
+nav.fixed.top-0 {
+    background: hsl(var(--color-background) / 0.6);
+    border-bottom-color: transparent;
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+}
+
+nav.fixed.top-0::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--color-primary) / 0.8) 25%, hsl(var(--color-tertiary) / 0.8) 50%, hsl(var(--color-secondary) / 0.8) 75%, transparent);
+    box-shadow: 0 0 12px hsl(var(--color-tertiary) / 0.8);
+}
+
+#main-aside {
+    background: hsl(var(--color-background) / 0.55);
+}
+
+/* The current page in the side menu glows. */
+#main-aside a.text-primary,
+#main-aside .bg-primary\/5,
+#main-aside a[aria-current="page"] {
+    text-shadow: 0 0 14px hsl(var(--color-primary) / 0.7);
+}
+
+.ag-footer {
+    position: relative;
+    background: hsl(var(--color-background) / 0.6);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.ag-footer::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--color-secondary) / 0.7) 30%, hsl(var(--color-primary) / 0.7) 70%, transparent);
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+
+.ag-button,
+.bg-primary.text-white:is(button, a) {
+    position: relative;
+    color: hsl(var(--color-on-primary));
+    background-image: linear-gradient(100deg, hsl(var(--color-primary)), hsl(var(--color-tertiary)) 50%, hsl(var(--color-secondary)));
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.08) inset, 0 8px 28px -10px hsl(var(--color-primary) / 0.9), 0 0 22px -8px hsl(var(--color-secondary) / 0.7);
+    transition: background-position 0.5s ease, box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.ag-button:hover:not(:disabled),
+.bg-primary.text-white:is(button, a):hover {
+    background-position: 100% 50%;
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.14) inset, 0 10px 36px -8px hsl(var(--color-primary) / 1), 0 0 30px -6px hsl(var(--color-secondary) / 0.9);
+}
+
+.ag-button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* Small primary fills (counters, badges) keep the default look, with readable text. */
+.bg-primary.text-white {
+    color: hsl(var(--color-on-primary));
+}
+
+span.bg-primary,
+div.bg-primary.rounded-full {
+    box-shadow: 0 0 14px -2px hsl(var(--color-primary) / 0.8);
+}
+
+/* Links in the brand colour glow a little. */
+a.text-primary:hover,
+.text-primary a:hover {
+    text-shadow: 0 0 12px hsl(var(--color-primary) / 0.7);
+}
+
+/* --- Forms ---------------------------------------------------------------- */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,
+textarea {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+select:focus,
+textarea:focus {
+    border-color: hsl(var(--color-secondary)) !important;
+    box-shadow: 0 0 0 3px hsl(var(--color-secondary) / 0.18), 0 0 18px -4px hsl(var(--color-secondary) / 0.7) !important;
+    outline: none;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: hsl(var(--color-primary));
+    box-shadow: 0 0 10px -1px hsl(var(--color-primary) / 0.8);
+}
+
+/* --- Status colours glow like the rest ------------------------------------ */
+
+.text-success { text-shadow: 0 0 12px hsl(var(--color-success) / 0.45); }
+.text-error { text-shadow: 0 0 12px hsl(var(--color-error) / 0.45); }
+.text-warning { text-shadow: 0 0 12px hsl(var(--color-warning) / 0.45); }
+
+/* --- The logo mark --------------------------------------------------------- */
+
+.ag-mark {
+    filter: drop-shadow(0 0 8px hsl(var(--color-primary) / 0.55));
+}
+
+/* --- Scrollbar ------------------------------------------------------------- */
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow:
+        inset 0 0 0 1px hsl(var(--color-tertiary) / 0.8),
+        inset 0 0 0 4px hsl(var(--color-tertiary) / 0.6);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    .bg-background-secondary,
+    nav.fixed.top-0,
+    .ag-footer {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background-color: hsl(var(--color-background-secondary));
+    }
+}
+
+/* --- Front page ------------------------------------------------------------ */
+
+/* The sun setting on a neon horizon. */
+.ag-horizon {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 30rem;
+    margin-inline: auto;
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 1px solid hsl(var(--color-neutral));
+    background: linear-gradient(180deg, hsl(var(--color-background) / 0.2), hsl(var(--color-tertiary) / 0.18) 55%, hsl(var(--color-background)) 56%);
+    box-shadow: 0 0 0 1px hsl(var(--color-primary) / 0.15), 0 30px 90px -30px hsl(var(--color-primary) / 0.7), 0 0 60px -20px hsl(var(--color-secondary) / 0.6);
+}
+
+.ag-sun {
+    position: absolute;
+    left: 50%;
+    top: 14%;
+    width: 62%;
+    aspect-ratio: 1 / 1;
+    transform: translateX(-50%);
+    border-radius: 9999px;
+    background: linear-gradient(180deg, #ffd166 5%, hsl(var(--color-primary)) 55%, hsl(var(--color-tertiary)) 90%);
+    filter: drop-shadow(0 0 40px hsl(var(--color-primary) / 0.8));
+    -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent 52%, transparent 56%, #000 56%, #000 63%, transparent 63%, transparent 68%, #000 68%, #000 73%, transparent 73%, transparent 79%, #000 79%, #000 82%, transparent 82%);
+    mask-image: linear-gradient(180deg, #000 52%, transparent 52%, transparent 56%, #000 56%, #000 63%, transparent 63%, transparent 68%, #000 68%, #000 73%, transparent 73%, transparent 79%, #000 79%, #000 82%, transparent 82%);
+}
+
+.ag-floor {
+    position: absolute;
+    left: -50%;
+    right: -50%;
+    bottom: 0;
+    height: 45%;
+    transform: perspective(240px) rotateX(55deg);
+    transform-origin: top center;
+    background-image:
+        linear-gradient(to right, hsl(var(--color-secondary) / 0.75) 1.5px, transparent 1.5px),
+        linear-gradient(to bottom, hsl(var(--color-primary) / 0.75) 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%);
+    mask-image: linear-gradient(to bottom, transparent, #000 35%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ag-motion .ag-floor { animation: ag-road 3s linear infinite; }
+}
+
+@keyframes ag-road {
+    from { background-position: 0 0; }
+    to { background-position: 0 40px; }
+}
+
+.ag-icon {
+    display: inline-flex;
+    width: 2.9rem;
+    height: 2.9rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.9rem;
+    color: hsl(var(--color-secondary));
+    background: hsl(var(--color-secondary) / 0.1);
+    box-shadow: inset 0 0 0 1px hsl(var(--color-secondary) / 0.35), 0 0 22px -6px hsl(var(--color-secondary) / 0.8);
+}
+
+.ag-card,
+.ag-step {
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.ag-card:hover {
+    transform: translateY(-3px);
+    border-color: hsl(var(--color-primary) / 0.6);
+    box-shadow: 0 0 0 1px hsl(var(--color-primary) / 0.3), 0 24px 60px -24px hsl(var(--color-primary) / 0.8);
+}
