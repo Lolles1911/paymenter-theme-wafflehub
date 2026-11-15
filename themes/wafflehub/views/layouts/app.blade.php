@@ -1,6 +1,6 @@
 {{-- WaffleHub: copy of the default theme's layout; only the marked lines differ. --}}
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if(in_array(app()->getLocale(), config('app.rtl_locales'))) dir="rtl" @endif>
+<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if(in_array(app()->getLocale(), config('app.rtl_locales'))) dir="rtl" @endif>
 
 <head>
     <meta charset="utf-8">
@@ -22,7 +22,7 @@
     @if (config('settings.favicon'))
     <link rel="icon" href="{{ Storage::url(config('settings.favicon')) }}">
     @else
-    {{-- WaffleHub: the waffle mark, until a favicon is uploaded under Settings. --}}
+    {{-- WaffleHub: the WaffleHub mark, until a favicon is uploaded under Settings. --}}
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,{{ rawurlencode(view('components.waffle-mark', ['attributes' => new \Illuminate\View\ComponentAttributeBag(['xmlns' => 'http://www.w3.org/2000/svg'])])->render()) }}">
     @endif
     @isset($title)
@@ -38,27 +38,22 @@
     <meta content="{{ $image }}" name="image">
     @endisset
 
-    <meta name="theme-color" content="{{ theme('primary') }}">
+    <meta name="theme-color" content="{{ theme('background', 'hsl(252, 45%, 4%)') }}">
 
     {!! hook('head') !!}
 </head>
 
-<body class="w-full bg-background text-base min-h-screen flex flex-col antialiased"
+{{-- WaffleHub: dark only, so no light/dark switching; "theme" stays defined for anything that reads it. --}}
+<body class="dark w-full bg-background text-base min-h-screen flex flex-col antialiased {{ theme('motion', true) ? 'ag-motion' : '' }}"
     x-cloak
-    x-data="{
-        theme: $persist('system').as('theme_mode'),
-        systemDark: window.matchMedia('(prefers-color-scheme: dark)').matches,
-        init() {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-                this.systemDark = e.matches;
-            });
-        },
-        get isDark() {
-            return this.theme === 'dark' || (this.theme === 'system' && this.systemDark);
-        }
-    }"
-    :class="{'dark': isDark}"
+    x-data="{ theme: 'dark', isDark: true }"
 >
+    {{-- WaffleHub: the soft light behind every page. --}}
+    <div class="ag-backdrop" aria-hidden="true"><span></span><span></span><span></span></div>
+    {{-- WaffleHub: the sign-in pages get the poster wall behind the form. --}}
+    @if (request()->is('login', 'register', 'password/*', '2fa', 'email/verify*'))
+    <div class="ag-auth-wall"><x-poster-wall /></div>
+    @endif
     {!! hook('body') !!}
     <x-navigation />
     <div class="w-full flex flex-grow">

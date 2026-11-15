@@ -24,13 +24,15 @@ if [ ! -f "$PAYMENTER/public/default/manifest.json" ]; then
   exit 1
 fi
 
-rm -rf "$PAYMENTER/themes/wafflehub" "$PAYMENTER/public/wafflehub"
-cp -r "$HERE/themes/wafflehub" "$PAYMENTER/themes/wafflehub"
-cp -r "$HERE/public/wafflehub" "$PAYMENTER/public/wafflehub"
+for THEME in wafflehub; do
+  rm -rf "$PAYMENTER/themes/$THEME" "$PAYMENTER/public/$THEME"
+  cp -r "$HERE/themes/$THEME" "$PAYMENTER/themes/$THEME"
+  cp -r "$HERE/public/$THEME" "$PAYMENTER/public/$THEME"
 
-# Same owner as the files Paymenter already serves.
-chown -R --reference="$PAYMENTER/themes/default" "$PAYMENTER/themes/wafflehub"
-chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/wafflehub"
+  # Same owner as the files Paymenter already serves.
+  chown -R --reference="$PAYMENTER/themes/default" "$PAYMENTER/themes/$THEME"
+  chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/$THEME"
+done
 
 # As the user that owns storage/ (usually www-data): run as root, artisan can
 # leave root-owned files behind that the web server then cannot write.
@@ -45,4 +47,4 @@ if command -v php >/dev/null 2>&1; then
 fi
 
 echo
-echo "Installed. Now choose it in Paymenter: Admin -> Settings -> Theme -> 'wafflehub' -> Save."
+echo "Installed. If WaffleHub isn't selected yet: Admin -> Settings -> Theme -> 'wafflehub' -> Save."

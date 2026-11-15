@@ -1,38 +1,43 @@
 # WaffleHub, a theme for Paymenter
 
-A warm, waffle-inspired theme for Paymenter with dark and light modes, its own
-home page, and a waffle logo with a play button.
+A dark, streaming-style theme for Paymenter: a wall of movie posters on the
+front page, frosted-glass panels, and a soft violet-to-pink accent. With the
+WaffleHub waffle logo.
 
-![The home page in dark mode](screenshots/forside-dark.png)
+![The front page](screenshots/forside.png)
 
 <details>
-<summary>Light mode and mobile</summary>
+<summary>Sign in, dashboard and mobile</summary>
 
-![The home page in light mode](screenshots/forside-light.png)
-![The home page on mobile](screenshots/mobil-dark.png)
+![The sign-in page](screenshots/login.png)
+![The dashboard](screenshots/dashboard.png)
+![The front page on a phone](screenshots/mobil.png)
 
 </details>
 
-> The screenshots are a static preview built with the theme's real stylesheet
-> and the same markup as the templates, but with sample text and a simplified
-> menu. They were not taken from a running Paymenter.
+> The screenshots are from a running Paymenter v1.5.9 with sample data.
 
 ## What the theme changes
 
 The theme builds on Paymenter's default theme. Every page that is not in
 `themes/wafflehub/views` comes from the default theme, so the cart, checkout,
 client area and invoices work as before and keep up when Paymenter is updated.
+They get WaffleHub's look from the stylesheet.
 
 | Changed | How |
 |---|---|
-| Colours | Caramel and gold. Light and dark mode, all text checked for contrast |
-| Font | Outfit, served from your own server (no Google Fonts) |
-| Home page | Large welcome, "How to get started" in three steps, subscriptions as cards |
+| Colours | Dark only (no light mode, no switch). One accent pair, violet to pink, and a soft light behind the pages |
+| Font | Space Grotesk, served from your own server (no Google Fonts) |
+| Front page | The headline over a wall of tilted posters that drift slowly; "How to get started" in three steps; subscriptions as cards |
+| Posters | Drawn in the theme's colours (six motifs, no images to load), or your own images, see *Customising* |
+| Sign-in pages | Sign in, sign up and password reset as a glass card over the poster wall |
+| Panels | Every card, menu and box is frosted glass; the top bar has a thin accent line |
+| Buttons | The accent gradient with a soft shadow; input fields light up in the accent colour |
 | Logo and favicon | The waffle logo is used until you upload your own under Settings |
-| Buttons | Dark text on gold in dark mode, so they stay readable |
+| Motion | The posters and the light move slowly. It can be turned off, and it is always off for visitors who ask their device for less motion |
 | Footer | Tidied up. The "Powered by Paymenter" link is kept, as Paymenter asks |
 | Register page | Has an extra hook (`auth.register`) so the [Paywarr extension](https://github.com/Lolles1911/paywarr) can show "Create an account with Discord" |
-| Closed shop | When the Wizarr extension's "Only Discord members can see the shop" is on, the subscriptions are hidden on the home page and the button leads to login/Discord |
+| Closed shop | When Paywarr's "Only Discord members can see the shop" is on, the subscriptions are hidden on the home page and the button leads to login/Discord |
 | Languages | The theme's texts follow the language Paymenter shows: English and Danish included |
 
 ## Installation (LXC or a regular install)
@@ -62,11 +67,20 @@ Under **Admin → Settings → Theme**, with WaffleHub selected:
 - **Home page texts:** small label, heading, body text (Markdown) and button
   text. **Leave a field empty** to get the default text in the visitor's
   language; anything you type is shown as it is, in every language. If the
-  shop's name appears in the heading, it gets the gold gradient.
+  shop's name appears in the heading, it gets the accent gradient.
+- **Poster wall images:** one image address per line, e.g. posters you have
+  uploaded somewhere or from your media server. Empty = the drawn posters.
+  Images on another site are loaded from that site by every visitor.
 - **"How to get started"** can be turned off.
-- **All colours** for light and dark mode, including the text colour on buttons.
-  "Reset Colors" puts them back to the WaffleHub colours.
+- **Moving light in the background:** turns the drifting posters and light off.
+- **Colours:** the accent (Primary to Secondary), text, borders and
+  backgrounds. "Reset Colors" puts them back to WaffleHub's colours.
 - **Logo and favicon** are uploaded under Settings → General as usual.
+
+**Upgrading from the earlier, caramel WaffleHub:** the texts you saved are
+kept. Colours saved for the caramel version are not used (the new colour
+settings have other names), so the new look shows right away. The caramel
+version is still in the repo's history (commit `8c10916`).
 
 ## Languages
 
@@ -102,13 +116,13 @@ cd /opt/paymenter && npm install && npm run build wafflehub
 
 | File | Contents |
 |---|---|
-| `themes/wafflehub/theme.php` | Name, colours and home page settings |
+| `themes/wafflehub/theme.php` | Name, colours and front page settings |
 | `themes/wafflehub/css/app.css` | Stylesheet: the default theme + WaffleHub |
-| `themes/wafflehub/views/home.blade.php` | The home page |
+| `themes/wafflehub/views/home.blade.php` | The front page |
 | `themes/wafflehub/lang/` | The theme's texts in English (`en`) and Danish (`da`) |
-| `themes/wafflehub/views/layouts/` | Layout (loads the files) and colour variables |
-| `themes/wafflehub/views/components/` | Logo, waffle mark, button, footer, editor |
+| `themes/wafflehub/views/layouts/` | Layout (loads the files, the light behind the pages, the poster wall on the sign-in pages) and colour variables |
+| `themes/wafflehub/views/components/` | Logo, waffle mark, poster wall and posters, button, footer, editor, (empty) light/dark switch |
 | `themes/wafflehub/views/auth/register.blade.php` | The register page with the hook for the Discord button |
-| `themes/wafflehub/fonts/` | Outfit (SIL Open Font License) |
+| `themes/wafflehub/fonts/` | Space Grotesk (SIL Open Font License) |
 | `public/wafflehub/` | The prebuilt stylesheet and font |
 | `install.sh` | Copies the theme into Paymenter |

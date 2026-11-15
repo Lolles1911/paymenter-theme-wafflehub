@@ -1,9 +1,11 @@
 /*
- * WaffleHub theme for Paymenter.
+ * WaffleHub - a dark theme for Paymenter with a soft violet-to-pink glow.
  *
  * Starts from the default theme's stylesheet. That brings in Tailwind, its
  * plugins and utilities, the editor styles, and makes Tailwind scan the
  * default theme's views - which are the pages this theme does not override.
+ * Those pages get WaffleHub's look from the rules further down, which work on
+ * the classes the default views already use.
  */
 @import "../../default/css/app.css";
 
@@ -12,59 +14,377 @@
 
 /* Self-hosted, so no visitor data goes to a font CDN. SIL Open Font License, see fonts/OFL.txt. */
 @font-face {
-    font-family: "Outfit";
+    font-family: "Space Grotesk";
     font-style: normal;
     font-display: swap;
-    font-weight: 100 900;
-    src: url("../fonts/outfit-latin-wght-normal.woff2") format("woff2-variations");
+    font-weight: 300 700;
+    src: url("../fonts/space-grotesk-latin-wght-normal.woff2") format("woff2-variations");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @theme {
-    --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme inline {
-    /* Text that sits on a primary-coloured fill (buttons, badges). */
     --color-on-primary: hsl(var(--color-on-primary));
+    --color-tertiary: hsl(var(--color-tertiary));
 }
 
-/* Waffle grid behind the front page hero. */
-@utility waffle-grid {
-    background-image:
-        linear-gradient(to right, hsl(var(--color-primary) / 0.09) 2px, transparent 2px),
-        linear-gradient(to bottom, hsl(var(--color-primary) / 0.09) 2px, transparent 2px);
-    background-size: 30px 30px;
-    background-position: -1px -1px;
-    -webkit-mask-image: radial-gradient(ellipse 80% 75% at 60% 20%, #000 35%, transparent 80%);
-    mask-image: radial-gradient(ellipse 80% 75% at 60% 20%, #000 35%, transparent 80%);
-}
-
-/* Warm glow, like syrup catching the light. */
-@utility syrup-glow {
-    background:
-        radial-gradient(40rem 22rem at 78% 18%, hsl(var(--color-secondary) / 0.22), transparent 70%),
-        radial-gradient(30rem 20rem at 8% 100%, hsl(var(--color-primary) / 0.12), transparent 70%);
-}
-
-/* Brand gradient for a word in a headline. Both ends keep large-text contrast. */
-@utility text-syrup {
-    background-image: linear-gradient(95deg, hsl(var(--color-primary)) 10%, hsl(var(--color-syrup-end)) 95%);
+/* The accent gradient, for a word in a headline. */
+@utility text-glow {
+    background-image: linear-gradient(95deg, hsl(var(--color-primary)), hsl(var(--color-secondary)));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-/*
- * The default views pair bg-primary with text-white in a few places. White
- * on WaffleHub's golden dark-mode primary is unreadable, so use the
- * "text on primary" colour instead. Unlayered on purpose: it must win over
- * Tailwind's utility layer.
- */
+/* A panel of frosted glass. */
+@utility glass {
+    background: hsl(var(--color-background-secondary) / 0.7);
+    border: 1px solid hsl(var(--color-neutral));
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.04);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    backdrop-filter: blur(16px) saturate(130%);
+}
+
+/* Unlayered from here on, on purpose: these must win over Tailwind's utilities. */
+
+html {
+    background: hsl(var(--color-background));
+}
+
+body {
+    background: transparent;
+}
+
+::selection {
+    background: hsl(var(--color-primary) / 0.35);
+    color: hsl(var(--color-base));
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.02em;
+}
+
+/* --- The soft light behind the pages ---------------------------------- */
+
+.ag-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: hsl(var(--color-background));
+}
+
+.ag-backdrop span {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(110px);
+}
+
+.ag-backdrop span:nth-child(1) {
+    width: 44rem;
+    height: 34rem;
+    left: -16rem;
+    top: -20rem;
+    background: hsl(var(--color-primary) / 0.2);
+}
+
+.ag-backdrop span:nth-child(2) {
+    width: 36rem;
+    height: 30rem;
+    right: -16rem;
+    top: 18rem;
+    background: hsl(var(--color-secondary) / 0.12);
+}
+
+.ag-backdrop span:nth-child(3) {
+    display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ag-motion .ag-backdrop span:nth-child(1) { animation: ag-drift 30s ease-in-out infinite alternate; }
+    .ag-motion .ag-backdrop span:nth-child(2) { animation: ag-drift 38s ease-in-out infinite alternate-reverse; }
+}
+
+@keyframes ag-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(5rem, 3rem, 0); }
+}
+
+/* --- Panels: every card, menu and box of the default pages becomes glass -- */
+
+.bg-background-secondary {
+    background-color: hsl(var(--color-background-secondary) / 0.75);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    backdrop-filter: blur(16px) saturate(130%);
+}
+
+.rounded-lg.bg-background-secondary,
+.rounded-xl.bg-background-secondary,
+.rounded-md.bg-background-secondary {
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.04);
+}
+
+/* Links that look like cards get a coloured edge. */
+a.bg-background-secondary:hover,
+a:hover > .bg-background-secondary.border {
+    border-color: hsl(var(--color-primary) / 0.45);
+}
+
+/* The top bar and the side menu: glass with a thin coloured line. */
+nav.fixed.top-0 {
+    background: hsl(var(--color-background) / 0.7);
+    border-bottom-color: transparent;
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+}
+
+nav.fixed.top-0::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, hsl(var(--color-neutral)), hsl(var(--color-primary) / 0.45) 35%, hsl(var(--color-secondary) / 0.35) 65%, hsl(var(--color-neutral)));
+}
+
+#main-aside {
+    background: hsl(var(--color-background) / 0.6);
+}
+
+.ag-footer {
+    position: relative;
+    border-top: 1px solid hsl(var(--color-neutral));
+    background: hsl(var(--color-background) / 0.6);
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+
+.ag-button,
+.bg-primary.text-white:is(button, a) {
+    color: hsl(var(--color-on-primary));
+    background-image: linear-gradient(100deg, hsl(var(--color-primary)), hsl(var(--color-secondary)));
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.18), 0 6px 20px -10px hsl(var(--color-primary) / 0.8);
+    transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.ag-button:hover:not(:disabled),
+.bg-primary.text-white:is(button, a):hover {
+    filter: brightness(1.08);
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.22), 0 8px 26px -10px hsl(var(--color-primary) / 0.9);
+}
+
+.ag-button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* Primary fills (counters, badges): readable text on top. */
 .bg-primary.text-white {
     color: hsl(var(--color-on-primary));
 }
 
-h1, h2, h3 {
-    letter-spacing: -0.015em;
+/* --- Forms ---------------------------------------------------------------- */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select,
+textarea {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+select:focus,
+textarea:focus {
+    border-color: hsl(var(--color-primary)) !important;
+    box-shadow: 0 0 0 3px hsl(var(--color-primary) / 0.18) !important;
+    outline: none;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background-color: hsl(var(--color-primary));
+}
+
+/* --- Scrollbar ------------------------------------------------------------- */
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow:
+        inset 0 0 0 1px hsl(var(--color-neutral)),
+        inset 0 0 0 4px hsl(var(--color-neutral));
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    .bg-background-secondary,
+    nav.fixed.top-0 {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background-color: hsl(var(--color-background-secondary));
+    }
+}
+
+/* --- Front page ------------------------------------------------------------ */
+
+/* The poster wall behind the headline: tilted columns that drift up and down. */
+.ag-hero {
+    border-bottom: 1px solid hsl(var(--color-neutral));
+    margin-top: -1px;
+}
+
+.ag-wall {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.ag-wall-grid {
+    position: absolute;
+    top: -30%;
+    left: 22%;
+    right: -18%;
+    bottom: -30%;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1rem;
+    transform: rotate(-8deg) skewX(-4deg);
+    opacity: 0.85;
+}
+
+.ag-wall-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ag-wall-col:nth-child(even) {
+    margin-top: -6rem;
+}
+
+.ag-poster {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    flex: none;
+    object-fit: cover;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.06), 0 18px 40px -18px hsl(0 0% 0% / 0.8);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ag-motion .ag-wall-col.ag-up { animation: ag-wall-up var(--ag-speed, 90s) linear infinite; }
+    .ag-motion .ag-wall-col.ag-down { animation: ag-wall-down var(--ag-speed, 90s) linear infinite; }
+}
+
+/* Each column holds its posters twice; moving by half its height loops without a jump. */
+@keyframes ag-wall-up {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-50% - 0.5rem)); }
+}
+
+@keyframes ag-wall-down {
+    from { transform: translateY(calc(-50% - 0.5rem)); }
+    to { transform: translateY(0); }
+}
+
+/* Darkens the wall where the text is, and fades it out at the bottom. */
+.ag-wall-shade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, hsl(var(--color-background)) 0%, hsl(var(--color-background) / 0.94) 30%, hsl(var(--color-background) / 0.55) 58%, hsl(var(--color-background) / 0.25) 100%),
+        linear-gradient(0deg, hsl(var(--color-background)) 0%, transparent 35%),
+        linear-gradient(180deg, hsl(var(--color-background) / 0.7) 0%, transparent 25%);
+}
+
+@media (max-width: 767px) {
+    .ag-wall-grid {
+        left: -10%;
+        right: -40%;
+        grid-template-columns: repeat(7, 7rem);
+        opacity: 0.6;
+    }
+
+    .ag-wall-shade {
+        background:
+            linear-gradient(0deg, hsl(var(--color-background)) 5%, hsl(var(--color-background) / 0.82) 45%, hsl(var(--color-background) / 0.6) 100%);
+    }
+}
+
+.ag-icon {
+    display: inline-flex;
+    width: 2.9rem;
+    height: 2.9rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.9rem;
+    color: hsl(var(--color-primary));
+    background: hsl(var(--color-primary) / 0.1);
+    box-shadow: inset 0 0 0 1px hsl(var(--color-primary) / 0.25);
+}
+
+.ag-card {
+    transition: border-color 0.25s, transform 0.25s;
+}
+
+.ag-card:hover {
+    transform: translateY(-2px);
+    border-color: hsl(var(--color-primary) / 0.45);
+}
+
+/* --- Sign-in pages: the form as a glass card over the poster wall ---------- */
+
+.ag-auth-wall {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+
+.ag-auth-wall .ag-wall-grid {
+    left: -10%;
+    right: -10%;
+    opacity: 0.55;
+}
+
+.ag-auth-wall .ag-wall-shade {
+    background:
+        radial-gradient(ellipse 60% 70% at 50% 45%, hsl(var(--color-background) / 0.92), hsl(var(--color-background) / 0.55) 100%),
+        linear-gradient(0deg, hsl(var(--color-background)) 0%, transparent 30%);
+}
+
+/* The default sign-in forms carry "bg-primary-800", a colour that doesn't exist. */
+form.bg-primary-800 {
+    max-width: 28rem;
+    margin: 3.5rem auto 0;
+    padding: 0 2rem 2.25rem;
+    border-radius: 1.25rem;
+    background: hsl(var(--color-background-secondary) / 0.8);
+    border: 1px solid hsl(var(--color-neutral));
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05), 0 40px 90px -40px hsl(var(--color-primary) / 0.5);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    backdrop-filter: blur(20px) saturate(130%);
+}
+
+form#register.bg-primary-800 {
+    max-width: 40rem;
+}
+
+form.bg-primary-800 > div:first-child {
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+form.bg-primary-800 h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+@media (max-width: 639px) {
+    form.bg-primary-800 {
+        width: calc(100% - 2rem);
+        margin-top: 1.5rem;
+        padding-inline: 1.25rem;
+    }
 }
