@@ -29,7 +29,7 @@ They get WaffleHub's look from the stylesheet.
 | Colours | Dark only (no light mode, no switch). One accent pair, violet to pink, and a soft light behind the pages |
 | Font | Space Grotesk, served from your own server (no Google Fonts) |
 | Front page | The headline over a wall of tilted posters that drift slowly; "How to get started" in three steps; subscriptions as cards |
-| Posters | Drawn in the theme's colours (six motifs, no images to load), or your own images, see *Customising* |
+| Posters | WaffleHub's own 18 waffle posters (astronaut, detective, cowboy …), or your own images, see *Customising* |
 | Sign-in pages | Sign in, sign up and password reset as a glass card over the poster wall |
 | Product page | The product on the left, the price and "Add to cart" in a card on the right (below on a phone) |
 | Panels | Every card, menu and box is frosted glass; the top bar has a thin accent line |
@@ -70,7 +70,8 @@ Under **Admin → Settings → Theme**, with WaffleHub selected:
   language; anything you type is shown as it is, in every language. If the
   shop's name appears in the heading, it gets the accent gradient.
 - **Poster wall images:** one image address per line, e.g. posters you have
-  uploaded somewhere or from your media server. Empty = the drawn posters.
+  uploaded somewhere or from your media server. Empty = WaffleHub's waffle
+  posters.
   Images on another site are loaded from that site by every visitor.
 - **"How to get started"** can be turned off.
 - **Moving light in the background:** turns the drifting posters and light off.
@@ -122,10 +123,11 @@ cd /opt/paymenter && npm install && npm run build wafflehub
 | `themes/wafflehub/views/home.blade.php` | The front page |
 | `themes/wafflehub/lang/` | The theme's texts in English (`en`) and Danish (`da`) |
 | `themes/wafflehub/views/layouts/` | Layout (loads the files, the light behind the pages, the poster wall on the sign-in pages) and colour variables |
-| `themes/wafflehub/views/components/` | Logo, waffle mark, poster wall and posters, button, footer, editor, (empty) light/dark switch |
+| `themes/wafflehub/views/components/` | Logo, waffle mark, poster wall, button, footer, editor, (empty) light/dark switch |
 | `themes/wafflehub/views/auth/register.blade.php` | The register page with the hook for the Discord button |
 | `themes/wafflehub/views/products/index.blade.php` | A category page: heading, the categories as a menu, the products as cards |
 | `themes/wafflehub/views/products/show.blade.php` | The product page: the product and its price as two cards |
 | `themes/wafflehub/fonts/` | Space Grotesk (SIL Open Font License) |
 | `public/wafflehub/` | The prebuilt stylesheet and font |
+| `public/wafflehub-art/posters/` | The 18 waffle posters (WebP) |
 | `install.sh` | Copies the theme into Paymenter |

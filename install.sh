@@ -34,6 +34,11 @@ for THEME in wafflehub; do
   chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/$THEME"
 done
 
+# The waffle posters for the front page: plain images, outside the stylesheet build.
+rm -rf "$PAYMENTER/public/wafflehub-art"
+cp -r "$HERE/public/wafflehub-art" "$PAYMENTER/public/wafflehub-art"
+chown -R --reference="$PAYMENTER/public/default" "$PAYMENTER/public/wafflehub-art"
+
 # As the user that owns storage/ (usually www-data): run as root, artisan can
 # leave root-owned files behind that the web server then cannot write.
 if command -v php >/dev/null 2>&1; then

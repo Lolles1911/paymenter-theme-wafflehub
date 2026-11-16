@@ -266,7 +266,7 @@ input[type="radio"]:checked {
 .ag-poster {
     display: block;
     width: 100%;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 1 / 1;
     flex: none;
     object-fit: cover;
     border-radius: 0.7rem;
