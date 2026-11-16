@@ -50,7 +50,7 @@ return [
             'label' => 'Front page: poster wall images (optional)',
             'type' => 'textarea',
             'default' => '',
-            'description' => 'One image address per line, e.g. posters you have uploaded or from your media server. Empty = drawn posters in the theme\'s colours. Images from another site are loaded from that site by every visitor.',
+            'description' => 'One image address per line, e.g. posters you have uploaded or from your media server. Empty = WaffleHub\'s own waffle posters. Images from another site are loaded from that site by every visitor.',
         ],
         [
             'name' => 'show_steps',
