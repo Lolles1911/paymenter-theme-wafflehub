@@ -41,15 +41,15 @@ They get WaffleHub's look from the stylesheet.
 | Closed shop | When Paywarr's "Only Discord members can see the shop" is on, the subscriptions are hidden on the home page and the button leads to login/Discord |
 | Languages | The theme's texts follow the language Paymenter shows: English and Danish included |
 
-## Installation (LXC or a regular install)
+## Installation
 
 The repo is private, so cloning asks for a GitHub token as the password
 (GitHub → Settings → Developer settings → Fine-grained tokens, only
 *Contents: Read* on this repo).
 
 ```bash
-git clone https://github.com/Lolles1911/paymenter-theme-wafflehub.git /tmp/wafflehub     # or: cd /tmp/wafflehub && git pull
-bash /tmp/wafflehub/install.sh /opt/paymenter
+git clone https://github.com/Lolles1911/paymenter-theme-wafflehub.git /opt/wafflehub
+bash /opt/wafflehub/install.sh /opt/paymenter
 ```
 
 Then select the theme: **Admin → Settings → Theme → `wafflehub` → Save**.
@@ -60,6 +60,17 @@ The script copies two folders into Paymenter:
 - `public/wafflehub`: the prebuilt stylesheet
 
 You don't need Node or `npm` on the server.
+
+## Updating
+
+What changed is in the [CHANGELOG](CHANGELOG.md).
+
+```bash
+cd /opt/wafflehub && git pull
+sudo bash /opt/wafflehub/install.sh /opt/paymenter
+```
+
+The script also clears Paymenter's view cache, so the new look shows at once.
 
 ## Customising
 
@@ -99,35 +110,12 @@ versions filled the home page fields with Danish text. Saved fields keep
 winning, so empty them under **Admin → Settings → Theme** to get the
 translated texts.
 
-## If you change the stylesheet or the templates
+## Documentation
 
-The stylesheet is prebuilt against Paymenter **v1.5.9**. If you add new
-Tailwind classes, or run another Paymenter version and something looks wrong,
-rebuild it on the server (requires Node 22):
-
-```bash
-cd /opt/paymenter && npm install && npm run build wafflehub
-```
-
-## Known caveats
-
-- The theme uses the default theme's JavaScript build (`public/default`). It is
-  there in a normal install; the script stops if it is missing.
-
-## Files
-
-| File | Contents |
+| | |
 |---|---|
-| `themes/wafflehub/theme.php` | Name, colours and front page settings |
-| `themes/wafflehub/css/app.css` | Stylesheet: the default theme + WaffleHub |
-| `themes/wafflehub/views/home.blade.php` | The front page |
-| `themes/wafflehub/lang/` | The theme's texts in English (`en`) and Danish (`da`) |
-| `themes/wafflehub/views/layouts/` | Layout (loads the files, the light behind the pages, the poster wall on the sign-in pages) and colour variables |
-| `themes/wafflehub/views/components/` | Logo, waffle mark, poster wall, button, footer, editor, (empty) light/dark switch |
-| `themes/wafflehub/views/auth/register.blade.php` | The register page with the hook for the Discord button |
-| `themes/wafflehub/views/products/index.blade.php` | A category page: heading, the categories as a menu, the products as cards |
-| `themes/wafflehub/views/products/show.blade.php` | The product page: the product and its price as two cards |
-| `themes/wafflehub/fonts/` | Space Grotesk (SIL Open Font License) |
-| `public/wafflehub/` | The prebuilt stylesheet and font |
-| `public/wafflehub-art/posters/` | The 18 waffle posters (WebP) |
-| `install.sh` | Copies the theme into Paymenter |
+| [Changing the theme](docs/development.md) | Rebuilding the stylesheet, known caveats, and what each file does |
+| [CHANGELOG](CHANGELOG.md) | What changed |
+
+Part of the [Paywarr](https://github.com/Lolles1911/Paywarr) family, with
+[Paywarr Stats](https://github.com/Lolles1911/Paywarr-stats) and Paywarr Seasons.
